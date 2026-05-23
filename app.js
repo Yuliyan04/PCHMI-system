@@ -1,8 +1,3 @@
-/* =============================================
-   Volunteer Chain — App Logic
-   ============================================= */
-
-// ── Navigation State ──────────────────────────
 let navHistory = [];
 let currentScreen = 'screen-welcome';
 
@@ -62,7 +57,6 @@ function updateNav(id) {
   });
 }
 
-// ── Chip / Filter helpers ─────────────────────
 function toggleChip(el) {
   el.classList.toggle('sel');
 }
@@ -83,55 +77,66 @@ function setTypeBtn(el) {
   el.classList.add('active');
 }
 
-// ── Event Data ────────────────────────────────
 const EVENTS = {
   vitoshaPlant: {
-    title: 'Засаждане на дървета – Витоша',
+    title: 'Засаждане на дървета - Витоша',
     tags: ['Екология', 'Физически', 'Групова'],
-    date: '18 Април 2026, 09:00–16:00',
+    date: '18 Април 2026, 09:00-16:00',
     location: 'Природен парк Витоша, Вход Бояна',
     org: 'БНТ Зелена България',
-    capacity: 12,
+    capacity: 18,
     maxCapacity: 30,
     pct: 40,
-    gradient: 'linear-gradient(160deg,#2A5C1E 0%,#4A8C36 60%,#7CB86A 100%)',
+    gradient: "url('images/forest-bg.png') center/cover no-repeat",
     description: 'Присъедини се към нас за залесяване в Природен парк Витоша. Ще засадим над 200 дървета заедно с местната общност.'
   },
   lunch: {
     title: 'Раздаване на обяд',
     tags: ['Социална', 'Кухня', 'Групова'],
-    date: '25 Април 2026, 11:00–14:00',
+    date: '25 Април 2026, 11:00-14:00',
     location: 'ул. Граф Игнатиев 42, София',
     org: 'Каритас България',
-    capacity: 8,
+    capacity: 12,
     maxCapacity: 20,
     pct: 40,
-    gradient: 'linear-gradient(160deg,#8B4513 0%,#CD853F 60%,#DEB887 100%)',
+    gradient: "url('images/lunch-bg.png') center/cover no-repeat",
     description: 'Помогни ни да раздадем топъл обяд на хора в нужда в центъра на София.'
   },
   animalShelter: {
-    title: 'Доброволци в приют за животни',
+    title: 'Разходки в приют',
     tags: ['Животни', 'Грижи', 'Индивидуална'],
-    date: '20 Април 2026, 10:00–13:00',
+    date: '20 Април 2026, 10:00-13:00',
     location: 'Приют за бездомни животни, кв. Горубляне',
     org: 'Животни в беда',
     capacity: 5,
     maxCapacity: 15,
     pct: 33,
-    gradient: 'linear-gradient(160deg,#5B4B8A 0%,#8B6BB1 60%,#C4A0D8 100%)',
-    description: 'Помогни на бездомните кучета и котки — разходки, игра и социализация.'
+    gradient: "url('images/shelter-bg.png') center/cover no-repeat",
+    description: 'Помогни на бездомните кучета и котки — разходки, игра и социализация. Всеки доброволец е добре дошъл!'
   },
   beachClean: {
     title: 'Почистване на плажа',
     tags: ['Екология', 'Физически', 'Групова'],
-    date: '10 Май 2026, 09:00–12:00',
+    date: '10 Май 2026, 09:00-12:00',
     location: 'Плаж Кабакум, Варна',
     org: 'Черно море Живо',
     capacity: 22,
     maxCapacity: 50,
     pct: 44,
-    gradient: 'linear-gradient(160deg,#0D4F7E 0%,#1A7DB6 60%,#5BB8E8 100%)',
+    gradient: "url('images/beach-bg.png') center/cover no-repeat",
     description: 'Събери се с нас за почистване на морски отпадъци по крайбрежието.'
+  },
+  readingLesson: {
+    title: 'Урок по четене',
+    tags: ['Образование', 'Деца', 'Индивидуална'],
+    date: '25 Април 2026, 14:00-16:00',
+    location: 'Читалище Слово, София',
+    org: 'Читалище Слово',
+    capacity: 6,
+    maxCapacity: 12,
+    pct: 50,
+    gradient: "linear-gradient(135deg,rgba(74,20,140,0.7),rgba(206,147,216,0.5)), url('images/reading-bg.jpg') center/cover no-repeat",
+    description: 'Помогни на деца да четат по-добре. Нужни са доброволци с желание да преподават и търпение.'
   }
 };
 
@@ -174,23 +179,33 @@ function openEvent(key) {
   go('screen-event-detail');
 }
 
-// ── Registration ──────────────────────────────
+function openVolunteerSelection(title) {
+  const el = document.getElementById('selection-event-title');
+  if (el) el.textContent = title;
+  go('screen-volunteer-selection');
+}
+
+function goApply() {
+  const titleEl = document.getElementById('event-hero-title');
+  const applyTitle = document.getElementById('apply-event-title');
+  if (applyTitle && titleEl) applyTitle.textContent = titleEl.textContent;
+  go('screen-apply');
+}
+
 function doRegister() {
   go('screen-home');
   showToast('Профилът е създаден успешно!', true);
 }
 
-// ── Publish event ─────────────────────────────
 function publishEvent() {
   showToast('Събитието е публикувано!', true);
 }
 
-// ── Calendar ──────────────────────────────────
 let calYear = 2026;
 let calMonth = 3; // April (0-indexed)
 
 const CAL_EVENTS = {
-  18: { label: 'Засаждане – Витоша', color: '#2A4820' },
+  18: { label: 'Засаждане - Витоша', color: '#2A4820' },
   25: { label: 'Раздаване на обяд', color: '#C8752A' }
 };
 
@@ -209,7 +224,7 @@ function renderCalendar() {
 
   const firstDay = new Date(calYear, calMonth, 1).getDay(); // 0=Sun
   const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
-  // Convert Sunday=0 to Monday=0
+
   const startOffset = (firstDay + 6) % 7;
 
   let html = '';
@@ -237,7 +252,6 @@ function calNav(dir) {
   renderCalendar();
 }
 
-// ── QR Canvas ─────────────────────────────────
 function pseudoRand(seed) {
   let s = seed;
   return function() {
@@ -258,11 +272,10 @@ function renderQR() {
   ctx.fillStyle = '#fff';
   ctx.fillRect(0, 0, SIZE, SIZE);
 
-  // Data modules
   ctx.fillStyle = '#1a1a1a';
   for (let r = 0; r < CELLS; r++) {
     for (let c = 0; c < CELLS; c++) {
-      // Skip finder pattern zones
+
       const inFinder =
         (r < 8 && c < 8) ||
         (r < 8 && c >= CELLS - 8) ||
@@ -274,7 +287,6 @@ function renderQR() {
     }
   }
 
-  // Finder patterns
   function drawFinder(x, y) {
     ctx.fillStyle = '#1a1a1a';
     ctx.fillRect(x, y, CELL * 7, CELL * 7);
@@ -289,7 +301,6 @@ function renderQR() {
   drawFinder(0, (CELLS - 7) * CELL);
 }
 
-// ── Toast ─────────────────────────────────────
 function showToast(msg, success = true) {
   const existing = document.getElementById('app-toast');
   if (existing) existing.remove();
@@ -310,14 +321,12 @@ function showToast(msg, success = true) {
   }, 2800);
 }
 
-// ── Invite all candidates ─────────────────────
 function inviteAll() {
   showToast('Поканени са топ 18 доброволци!', true);
 }
 
-// ── Init ──────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-  // Show welcome screen
+
   const welcome = document.getElementById('screen-welcome');
   if (welcome) welcome.classList.add('active');
   currentScreen = 'screen-welcome';
@@ -325,7 +334,6 @@ document.addEventListener('DOMContentLoaded', () => {
   renderCalendar();
   renderQR();
 
-  // Wire nav items via data-tab attribute
   document.querySelectorAll('.nav-item[data-tab]').forEach(el => {
     el.addEventListener('click', () => navTo(el.dataset.tab));
   });
