@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls \"c:\\\\Users\\\\Yulian\\\\Desktop\\\\pchmi\\\\\")",
+      "Read(//c/Users/Yulian/Desktop/**)"
+    ]
+  }
+}
