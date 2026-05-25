@@ -567,6 +567,20 @@ function showToast(msg, success = true) {
   }, 2800);
 }
 
+function toggleProfileMenu() {
+  const menu = document.getElementById('profile-menu');
+  menu.classList.toggle('open');
+}
+
+function closeProfileMenu() {
+  document.getElementById('profile-menu').classList.remove('open');
+}
+
+function doLogout() {
+  closeProfileMenu();
+  go('screen-login');
+}
+
 function inviteAll() {
   showToast('Поканени са топ 18 доброволци!', true);
 }
@@ -644,6 +658,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (item) {
       item.classList.add('tooltip-visible');
       setTimeout(() => item.classList.remove('tooltip-visible'), 2000);
+    }
+
+    const menu = document.getElementById('profile-menu');
+    if (menu && menu.classList.contains('open')) {
+      if (!e.target.closest('.profile-menu') && !e.target.closest('.profile-3dots')) {
+        menu.classList.remove('open');
+      }
     }
   });
 });
