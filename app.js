@@ -61,6 +61,12 @@ function toggleChip(el) {
   el.classList.toggle('sel');
 }
 
+function toggleCandProfile(arrow, profileId) {
+  const profile = document.getElementById(profileId);
+  const isOpen = profile.classList.toggle('open');
+  arrow.classList.toggle('open', isOpen);
+}
+
 function toggleMoreCategories() {
   const panel = document.getElementById('more-cats');
   const btn   = document.getElementById('more-cats-btn');
@@ -563,6 +569,60 @@ function showToast(msg, success = true) {
 
 function inviteAll() {
   showToast('Поканени са топ 18 доброволци!', true);
+}
+
+function showInvitePanel(teamId) {
+  const panel = document.getElementById('invite-panel-' + teamId);
+  const isOpen = panel.style.display !== 'none';
+  panel.style.display = isOpen ? 'none' : 'block';
+  if (!isOpen) {
+    document.getElementById('invite-email-' + teamId).focus();
+  }
+}
+
+function doInviteMember(teamId) {
+  const emailInput = document.getElementById('invite-email-' + teamId);
+  const errorEl = document.getElementById('invite-error-' + teamId);
+  const email = emailInput.value.trim();
+
+  if (!email) {
+    errorEl.textContent = 'Моля, въведете имейл адрес.';
+    errorEl.classList.add('visible');
+    emailInput.classList.add('input-error');
+    return;
+  }
+  if (!isValidEmail(email)) {
+    errorEl.textContent = 'Невалиден имейл адрес.';
+    errorEl.classList.add('visible');
+    emailInput.classList.add('input-error');
+    return;
+  }
+
+  const membersContainer = document.getElementById('members-' + teamId);
+  const lastRow = membersContainer.querySelector('.member-row:last-child');
+  if (lastRow) lastRow.style.borderBottom = '';
+
+  const initials = email.slice(0, 2).toUpperCase();
+  const row = document.createElement('div');
+  row.className = 'member-row';
+  row.style.borderBottom = 'none';
+  row.innerHTML = `
+    <div class="avatar av-md" style="background:#e0e0e0; color:#666;">${initials}</div>
+    <div style="flex:1;">
+      <div class="member-name">${email}</div>
+      <div class="member-count">Покана изпратена</div>
+    </div>
+    <span class="status status-orange" style="font-size:11px;">Чакащ</span>
+  `;
+  membersContainer.appendChild(row);
+
+  emailInput.value = '';
+  emailInput.classList.remove('input-error');
+  errorEl.textContent = '';
+  errorEl.classList.remove('visible');
+  document.getElementById('invite-panel-' + teamId).style.display = 'none';
+
+  showToast('Поканата е изпратена!', true);
 }
 
 document.addEventListener('DOMContentLoaded', () => {

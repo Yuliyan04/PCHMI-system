@@ -464,7 +464,7 @@ html, body {
 .profile-sec-hdr { padding: 16px 16px 8px; display: flex; justify-content: space-between; align-items: center; }
 .profile-sec-title { font-family: var(--serif); font-size: 17px; font-weight: 700; color: var(--text); }
 
-.badges-row { display: flex; gap: 16px; padding: 8px 16px 16px; overflow-x: auto; scrollbar-width: none; }
+.badges-row { display: flex; gap: 16px; padding: 8px 16px; overflow-x: auto; scrollbar-width: none; }
 .badges-row::-webkit-scrollbar { display: none; }
 .badge-item { display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: default; flex-shrink: 0; position: relative; }
 .badge-item[data-tooltip]::after { content: attr(data-tooltip); position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); background: #333; color: #fff; font-size: 11px; white-space: nowrap; padding: 4px 8px; border-radius: 6px; pointer-events: none; opacity: 0; transition: opacity 0.15s; z-index: 10; }
@@ -483,6 +483,8 @@ html, body {
   border: 2px solid white;
 }
 .badge-label { font-size: 11px; color: var(--text-mid); font-weight: 500; }
+.badge-circle-sm { width: 40px; height: 40px; }
+.badge-circle-sm svg { width: 18px; height: 18px; }
 
 .cert-row {
   display: flex; align-items: center; gap: 14px;
@@ -510,6 +512,22 @@ html, body {
 }
 .org-link-label { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 3px; }
 .org-link-name  { font-size: 14px; font-weight: 600; color: var(--text); }
+
+.past-evt-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px; border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+.past-evt-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.past-evt-title { font-size: 14px; font-weight: 600; color: var(--text); }
+.past-evt-meta  { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+
+.past-evt-stat-box {
+  flex: 1; background: var(--white); border: 1.5px solid var(--border);
+  border-radius: var(--r-md); padding: 12px 8px; text-align: center;
+}
+.past-evt-stat-val { font-size: 22px; font-weight: 800; color: var(--green); }
+.past-evt-stat-lbl { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
 
 #screen-org-dashboard { background: var(--bg); }
 .org-dash-hdr { padding: 52px 20px 0; flex-shrink: 0; background: var(--white); }
@@ -584,10 +602,10 @@ html, body {
 .algo-info-title { font-size: 13px; font-weight: 700; color: var(--green); margin-bottom: 4px; }
 .algo-info-text  { font-size: 12px; color: var(--green-mid); line-height: 1.6; }
 .cand-card {
-  display: flex; align-items: center; gap: 14px;
   background: var(--bg-card); border: 1.5px solid var(--border);
   border-radius: var(--r-lg); padding: 14px 16px; margin-bottom: 10px;
 }
+.cand-card-row { display: flex; align-items: center; gap: 14px; }
 .cand-num {
   width: 34px; height: 34px; border-radius: 50%;
   background: var(--green-light); color: var(--green);
@@ -596,7 +614,38 @@ html, body {
 }
 .cand-info { flex: 1; }
 .cand-name { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
-.cand-down { color: var(--text-muted); margin-top: 2px; }
+.cand-down {
+  color: var(--text-muted); cursor: pointer; padding: 2px;
+  transition: transform .2s ease;
+}
+.cand-down.open { transform: rotate(180deg); color: var(--green); }
+.cand-profile {
+  display: none; flex-direction: column; gap: 12px;
+  margin-top: 12px; padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+.cand-profile.open { display: flex; }
+.cand-profile .badges-row { padding: 4px 0; gap: 0; }
+.cand-profile .badges-row .badge-item { width: 72px; }
+.cand-profile-top { display: flex; align-items: center; gap: 12px; }
+.cand-avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--green); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700; flex-shrink: 0;
+}
+.cand-profile-stats { display: flex; gap: 16px; }
+.cand-stat { text-align: center; }
+.cand-stat-val { font-size: 16px; font-weight: 700; color: var(--text); }
+.cand-stat-lbl { font-size: 11px; color: var(--text-muted); }
+.cand-badges-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.cand-badge {
+  display: flex; align-items: center; gap: 5px;
+  background: var(--green-light); color: var(--green);
+  border-radius: var(--r-pill); padding: 4px 10px;
+  font-size: 11px; font-weight: 600;
+}
+.cand-skills-row { display: flex; gap: 6px; flex-wrap: wrap; }
 
 #screen-team { background: var(--white); }
 .team-card { background: var(--bg-card); border: 1.5px solid var(--border); border-radius: var(--r-lg); margin: 12px 20px; overflow: hidden; }

@@ -5,7 +5,12 @@
       "Read(//c/Users/Yulian/Desktop/**)",
       "Bash(git pull *)",
       "Bash(git stash *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "PowerShell(Invoke-WebRequest -Uri \"https://images.unsplash.com/photo-1593113630400-ea4288922559?w=600&q=80\" -OutFile \"c:\\\\Users\\\\Yulian\\\\Desktop\\\\pchmi\\\\pchmi_project\\\\images\\\\report-event3.jpg\" -UseBasicParsing)",
+      "PowerShell(if \\($?\\) { \"Downloaded OK\" } else { \"Failed\" })",
+      "PowerShell(Invoke-WebRequest -Uri \"https://picsum.photos/seed/volunteer/600/400\" -OutFile \"c:\\\\Users\\\\Yulian\\\\Desktop\\\\pchmi\\\\pchmi_project\\\\images\\\\report-event3.jpg\" -UseBasicParsing)",
+      "Bash(curl -L \"https://picsum.photos/seed/volunteer/600/400\" -o \"c:/Users/Yulian/Desktop/pchmi/pchmi_project/images/report-event3.jpg\" --max-time 20)",
+      "Bash(curl -L \"https://picsum.photos/seed/trees/600/400\" -o \"c:/Users/Yulian/Desktop/pchmi/pchmi_project/images/report-event4.jpg\" --max-time 20)"
     ]
   }
 }
