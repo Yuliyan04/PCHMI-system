@@ -61,6 +61,14 @@ function toggleChip(el) {
   el.classList.toggle('sel');
 }
 
+function toggleMoreCategories() {
+  const panel = document.getElementById('more-cats');
+  const btn   = document.getElementById('more-cats-btn');
+  const open  = panel.style.display === 'none' || panel.style.display === '';
+  panel.style.display = open ? 'flex' : 'none';
+  btn.classList.toggle('sel', open);
+}
+
 let activeHomeFilter = 'всички';
 
 function searchEvents() {
