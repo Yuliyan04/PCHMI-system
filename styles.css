@@ -555,6 +555,18 @@ html, body {
   color: var(--text-mid); font-family: var(--sans); text-align: center; transition: all .14s;
 }
 .form-type-btn.sel { background: var(--green-light); color: var(--green); border-color: var(--green-mid); font-weight: 600; }
+.team-pick-card {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 16px; border-radius: var(--r-md);
+  border: 1.5px solid var(--border); background: var(--white);
+  cursor: pointer; transition: border-color .14s, background .14s;
+}
+.team-pick-card.sel { border-color: var(--green-mid); background: var(--green-light); }
+.team-pick-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--green); color: white; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.team-pick-name { font-size: 14px; font-weight: 600; color: var(--text); }
+.team-pick-count { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.team-pick-check { margin-left: auto; width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all .14s; }
+.team-pick-card.sel .team-pick-check { background: var(--green); border-color: var(--green); }
 .qr-box { display: flex; justify-content: center; padding: 12px 0 4px; }
 .qr-box canvas { border-radius: var(--r-sm); }
 .doc-row { display: flex; align-items: center; gap: 10px; }

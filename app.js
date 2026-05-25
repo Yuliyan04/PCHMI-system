@@ -142,11 +142,41 @@ function setFilter(el) {
 }
 
 function setTypeBtn(el) {
-  const parent = el.closest('.type-btns');
-  if (parent) {
-    parent.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+  const parent = el.closest('.form-type-btns');
+  if (parent) parent.querySelectorAll('button').forEach(b => b.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+function setApplyType(el, type) {
+  setTypeBtn(el);
+  const picker = document.getElementById('team-picker');
+  if (!picker) return;
+  picker.style.display = type === 'team' ? 'flex' : 'none';
+  if (type === 'team') {
+    document.getElementById('team-green-warriors').classList.add('sel');
+    document.getElementById('team-angry-birds').classList.remove('sel');
+    updateTeamCheck('team-green-warriors', true);
+    updateTeamCheck('team-angry-birds', false);
   }
-  el.classList.add('active');
+}
+
+function updateTeamCheck(id, checked) {
+  const card = document.getElementById(id);
+  if (!card) return;
+  const box = card.querySelector('.team-pick-check');
+  box.innerHTML = checked
+    ? '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
+    : '';
+}
+
+function selectTeam(card) {
+  const picker = document.getElementById('team-picker');
+  picker.querySelectorAll('.team-pick-card').forEach(c => {
+    c.classList.remove('sel');
+    updateTeamCheck(c.id, false);
+  });
+  card.classList.add('sel');
+  updateTeamCheck(card.id, true);
 }
 
 const EVENTS = {
