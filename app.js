@@ -402,6 +402,12 @@ function doLogin() {
   showToast('Влязохте успешно!', true);
 }
 
+function openQR(title, date, org) {
+  document.getElementById('cert-event-title').textContent = title;
+  document.getElementById('cert-event-sub').textContent = `${date} · ${org}`;
+  go('screen-qr');
+}
+
 function publishEvent() {
   const fields = [
     { id: 'ev-title',    errId: 'ev-title-err',    test: v => v.trim().length > 0 },

@@ -444,8 +444,8 @@
         <div class="cert-name">Мария Иванова</div>
         <div class="cert-participated">е участвала в доброволческо събитие</div>
         <div class="cert-event-box">
-          <div class="cert-event-title">Засаждане на дървета - Витоша</div>
-          <div class="cert-event-sub">18 Април 2026 · БНТ Зелена България</div>
+          <div class="cert-event-title" id="cert-event-title">Засаждане на дървета - Витоша</div>
+          <div class="cert-event-sub" id="cert-event-sub">18 Април 2026 · БНТ Зелена България</div>
         </div>
         <div class="cert-footer-row">
           <span class="cert-id">ID: VC-2025-04891</span>
@@ -622,10 +622,10 @@
     <div class="cal-month-row">
       <h2 class="cal-month-title" id="cal-title">Април 2026</h2>
       <div style="display:flex; gap:8px;">
-        <button class="cal-nav-btn">
+        <button class="cal-nav-btn" onclick="calNav(-1)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
-        <button class="cal-nav-btn">
+        <button class="cal-nav-btn" onclick="calNav(1)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
         </button>
       </div>
@@ -643,7 +643,7 @@
       <span class="sec-title">Предстоящи участия</span>
     </div>
 
-    <div class="upcoming-card" onclick="go('screen-qr')">
+    <div class="upcoming-card" onclick="openQR('Засаждане на дървета - Витоша', '18 Април 2026', 'БНТ Зелена България')">
       <div class="upcoming-date-box green">
         <span class="upcoming-day">18</span>
         <span class="upcoming-mon">АПР</span>
@@ -655,7 +655,7 @@
       <span class="status status-green">Записан</span>
     </div>
 
-    <div class="upcoming-card" onclick="go('screen-qr')">
+    <div class="upcoming-card" onclick="openQR('Раздаване на обяд', '18 Април 2026', 'Каритас България')">
       <div class="upcoming-date-box green">
         <span class="upcoming-day">18</span>
         <span class="upcoming-mon">АПР</span>
@@ -667,7 +667,7 @@
       <span class="status status-orange">Одобрен</span>
     </div>
 
-    <div class="upcoming-card" onclick="go('screen-qr')">
+    <div class="upcoming-card" onclick="openQR('Урок по четене', '25 Април 2026', 'Читалище Слово')">
       <div class="upcoming-date-box orange">
         <span class="upcoming-day">25</span>
         <span class="upcoming-mon">АПР</span>
@@ -759,7 +759,7 @@
     
     <div class="profile-section" style="margin-top:12px;">
       <div class="profile-sec-hdr"><span class="profile-sec-title">Сертификати</span></div>
-      <div class="cert-row" style="background:var(--green); margin:0 0 2px; border-radius:0; cursor:pointer;" onclick="go('screen-qr')">
+      <div class="cert-row" style="background:var(--green); margin:0 0 2px; border-radius:0; cursor:pointer;" onclick="openQR('Засаждане на дървета - Витоша', '18 Април 2026', 'БНТ Зелена България')">
         <div class="cert-row-icon" style="background:rgba(255,255,255,.15);">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         </div>
@@ -769,7 +769,7 @@
         </div>
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="3" height="3"/><rect x="18" y="18" width="3" height="3"/><rect x="14" y="18" width="3" height="3"/><rect x="18" y="14" width="3" height="3"/></svg>
       </div>
-      <div class="cert-row" style="background:#1A3A6A; border-radius:0; cursor:pointer;" onclick="go('screen-qr')">
+      <div class="cert-row" style="background:#1A3A6A; border-radius:0; cursor:pointer;" onclick="openQR('Помощ при баскетбол', '10 Март 2026', 'Каритас България')">
         <div class="cert-row-icon" style="background:rgba(255,255,255,.15);">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         </div>
@@ -864,7 +864,7 @@
       <div class="progress-track"><div class="progress-fill" style="width:40%;"></div></div>
       <div class="org-event-btns">
         <button class="btn btn-light btn-pill" onclick="go('screen-post-report')">Доклад</button>
-        <button class="btn btn-outline btn-pill" onclick="openVolunteerSelection('Засаждане - Витоша')">Подбери</button>
+        <button class="btn btn-outline btn-pill" disabled style="opacity:.4; cursor:not-allowed;">Подбери</button>
       </div>
     </div>
 
@@ -947,7 +947,6 @@
       </div>
 
       
-      <button class="btn btn-outline btn-full btn-pill" style="padding:15px;">Прегледай доклада</button>
       <button class="btn btn-green btn-full btn-pill" style="padding:15px;">
         Публикувай доклада
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
