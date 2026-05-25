@@ -466,7 +466,9 @@ html, body {
 
 .badges-row { display: flex; gap: 16px; padding: 8px 16px 16px; overflow-x: auto; scrollbar-width: none; }
 .badges-row::-webkit-scrollbar { display: none; }
-.badge-item { display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; flex-shrink: 0; }
+.badge-item { display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: default; flex-shrink: 0; position: relative; }
+.badge-item[data-tooltip]::after { content: attr(data-tooltip); position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); background: #333; color: #fff; font-size: 11px; white-space: nowrap; padding: 4px 8px; border-radius: 6px; pointer-events: none; opacity: 0; transition: opacity 0.15s; z-index: 10; }
+.badge-item[data-tooltip].tooltip-visible::after { opacity: 1; }
 .badge-circle {
   width: 56px; height: 56px; border-radius: 50%;
   border: 2px solid var(--green-chip); background: var(--white);

@@ -102,17 +102,17 @@
 
     <div class="form-group">
       <label class="form-label">Име и фамилия *</label>
-      <input type="text" id="reg-name" class="form-input" placeholder="Мария Иванова" />
+      <input type="text" id="reg-name" class="form-input" placeholder="Въведи име и фамилия" />
       <div class="form-error" id="reg-name-err">Моля, въведи името си.</div>
     </div>
     <div class="form-group">
       <label class="form-label">Имейл *</label>
-      <input type="email" id="reg-email" class="form-input" placeholder="maria@example.bg" />
+      <input type="email" id="reg-email" class="form-input" placeholder="Въведи имейл адрес" />
       <div class="form-error" id="reg-email-err">Моля, въведи валиден имейл адрес.</div>
     </div>
     <div class="form-group">
       <label class="form-label">Парола *</label>
-      <input type="password" id="reg-password" class="form-input" placeholder="Минимум 6 символа" />
+      <input type="password" id="reg-password" class="form-input" placeholder="Въведи парола" />
       <div class="form-error" id="reg-password-err">Паролата трябва да е поне 6 символа.</div>
     </div>
 
@@ -541,18 +541,19 @@
   <div class="screen-body with-nav" style="background:var(--bg);">
     <div style="padding:12px 16px 0;">
       <div class="chip-row">
-        <button class="chip chip-sm sel" onclick="setFilter(this)">Всички</button>
-        <button class="chip chip-sm" onclick="setFilter(this)">Здраве</button>
-        <button class="chip chip-sm" onclick="setFilter(this)">Животни</button>
-        <button class="chip chip-sm" onclick="setFilter(this)">Деца</button>
-        <button class="chip chip-sm" onclick="setFilter(this)">Екологи</button>
+        <button class="chip chip-sm sel" onclick="setCauseFilter(this)" data-category="all">Всички</button>
+        <button class="chip chip-sm" onclick="setCauseFilter(this)" data-category="Деца">Деца</button>
+        <button class="chip chip-sm" onclick="setCauseFilter(this)" data-category="Екология">Екология</button>
+        <button class="chip chip-sm" onclick="setCauseFilter(this)" data-category="Здраве">Здраве</button>
+        <button class="chip chip-sm" onclick="setCauseFilter(this)" data-category="Животни">Животни</button>
+        <button class="chip chip-sm" onclick="setCauseFilter(this)" data-category="Концерти">Концерти</button>
       </div>
     </div>
 
     <div style="padding:12px 16px; display:flex; flex-direction:column; gap:10px;">
 
       
-      <div class="cause-card">
+      <div class="cause-card" data-category="Деца">
         <div class="cause-org-name">Каритас България</div>
         <div class="cause-title">Помощ за деца с увреждания - баскетбол</div>
         <div class="progress-track"><div class="progress-fill" style="width:73%;"></div></div>
@@ -570,7 +571,7 @@
       </div>
 
       
-      <div class="cause-card">
+      <div class="cause-card" data-category="Екология">
         <div class="cause-org-name">БНТ Зелена България</div>
         <div class="cause-title">Залесяване - Рила 2026</div>
         <div class="progress-track"><div class="progress-fill" style="width:45%;"></div></div>
@@ -588,8 +589,7 @@
       </div>
 
       
-      <div class="cause-card">
-        <div class="cause-category-label">Благотворителен концерт</div>
+      <div class="cause-card" data-category="Концерти">
         <div class="cause-title">Нощ на доброволеца - 25 Май</div>
         <div class="progress-track"><div class="progress-fill" style="width:88%;"></div></div>
         <div class="cause-ticket-row">
@@ -722,32 +722,32 @@
     <div class="profile-section" style="margin-top:14px;">
       <div class="profile-sec-hdr"><span class="profile-sec-title">Значки</span></div>
       <div class="badges-row">
-        <div class="badge-item" onclick="showToast('Значка: Начало')">
+        <div class="badge-item" data-tooltip="Значка: Начало">
           <div class="badge-circle">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
           </div>
           <span class="badge-label">Начало</span>
         </div>
-        <div class="badge-item" onclick="showToast('Значка: Еколог')">
+        <div class="badge-item" data-tooltip="Значка: Еколог">
           <div class="badge-circle">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/></svg>
           </div>
           <span class="badge-label">Еколог</span>
         </div>
-        <div class="badge-item" onclick="showToast('Значка: Помощник')">
+        <div class="badge-item" data-tooltip="Значка: Помощник">
           <div class="badge-circle">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
           </div>
           <span class="badge-label">Помощник</span>
         </div>
-        <div class="badge-item" onclick="showToast('5 поред участия!')">
+        <div class="badge-item" data-tooltip="5 поред участия!">
           <div class="badge-circle">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             <div class="badge-number">5</div>
           </div>
           <span class="badge-label">5 поред</span>
         </div>
-        <div class="badge-item" onclick="showToast('Значка: Екипен')">
+        <div class="badge-item" data-tooltip="Значка: Екипен">
           <div class="badge-circle">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
@@ -947,8 +947,8 @@
       </div>
 
       
-      <button class="btn btn-outline btn-full btn-pill" style="padding:15px;" onclick="showToast('Преглед на доклада')">Прегледай доклада</button>
-      <button class="btn btn-green btn-full btn-pill" style="padding:15px;" onclick="showToast('Докладът е публикуван!')">
+      <button class="btn btn-outline btn-full btn-pill" style="padding:15px;">Прегледай доклада</button>
+      <button class="btn btn-green btn-full btn-pill" style="padding:15px;">
         Публикувай доклада
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </button>
@@ -976,29 +976,35 @@
     <div style="height:16px;"></div>
     <div class="form-group">
       <label class="form-label">Заглавие *</label>
-      <input type="text" class="form-input" placeholder="Въведи заглавие на събитието..." />
+      <input type="text" id="ev-title" class="form-input" placeholder="Въведи заглавие на събитието..." />
+      <div class="form-error" id="ev-title-err">Моля, въведи заглавие на събитието.</div>
     </div>
     <div class="form-group">
       <label class="form-label">Описание *</label>
-      <textarea class="form-textarea" placeholder="Опиши събитието — какво ще се прави, какво да носят участниците..."></textarea>
+      <textarea id="ev-desc" class="form-textarea" placeholder="Опиши събитието — какво ще се прави, какво да носят участниците..."></textarea>
+      <div class="form-error" id="ev-desc-err">Моля, добави описание на събитието.</div>
     </div>
     <div class="form-row">
       <div class="form-group">
         <label class="form-label">Дата *</label>
-        <input type="text" class="form-input" placeholder="дд.мм.гггг" />
+        <input type="text" id="ev-date" class="form-input" placeholder="дд.мм.гггг" />
+        <div class="form-error" id="ev-date-err">Въведи дата във формат дд.мм.гггг.</div>
       </div>
       <div class="form-group">
         <label class="form-label">Час *</label>
-        <input type="text" class="form-input" placeholder="чч:мм" />
+        <input type="text" id="ev-time" class="form-input" placeholder="чч:мм" />
+        <div class="form-error" id="ev-time-err">Въведи час във формат чч:мм.</div>
       </div>
     </div>
     <div class="form-group">
       <label class="form-label">Локация *</label>
-      <input type="text" class="form-input" placeholder="Въведи адрес или място..." />
+      <input type="text" id="ev-location" class="form-input" placeholder="Въведи адрес или място..." />
+      <div class="form-error" id="ev-location-err">Моля, въведи локация на събитието.</div>
     </div>
     <div class="form-group">
       <label class="form-label">Максимален брой доброволци *</label>
-      <input type="number" class="form-input" placeholder="напр. 30" />
+      <input type="number" id="ev-capacity" class="form-input" placeholder="напр. 30" />
+      <div class="form-error" id="ev-capacity-err">Въведи валиден брой доброволци (минимум 1).</div>
     </div>
     <div class="form-group">
       <label class="form-label" style="margin-bottom:10px;">Категория</label>

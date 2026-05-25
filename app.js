@@ -133,8 +133,30 @@ function toggleTerms(btn) {
     : '';
 }
 
+function setCauseFilter(el) {
+  const row = el.closest('.chip-row');
+  const allBtn = row.querySelector('[data-category="all"]');
+  const category = el.dataset.category;
+
+  if (category === 'all') {
+    row.querySelectorAll('.chip').forEach(c => c.classList.remove('sel'));
+    allBtn.classList.add('sel');
+  } else {
+    allBtn.classList.remove('sel');
+    el.classList.toggle('sel');
+    const anyActive = row.querySelectorAll('.chip:not([data-category="all"]).sel').length > 0;
+    if (!anyActive) allBtn.classList.add('sel');
+  }
+
+  const active = [...row.querySelectorAll('.chip.sel')].map(c => c.dataset.category);
+  const showAll = active.includes('all');
+  document.querySelectorAll('#screen-causes .cause-card').forEach(card => {
+    card.style.display = (showAll || active.includes(card.dataset.category)) ? '' : 'none';
+  });
+}
+
 function setFilter(el) {
-  const parent = el.closest('.chips-row, .filter-row, .filter-chips');
+  const parent = el.closest('.chip-row, .chips-row, .filter-row, .filter-chips');
   if (parent) {
     parent.querySelectorAll('.chip').forEach(c => c.classList.remove('sel'));
   }
@@ -381,6 +403,27 @@ function doLogin() {
 }
 
 function publishEvent() {
+  const fields = [
+    { id: 'ev-title',    errId: 'ev-title-err',    test: v => v.trim().length > 0 },
+    { id: 'ev-desc',     errId: 'ev-desc-err',     test: v => v.trim().length > 0 },
+    { id: 'ev-date',     errId: 'ev-date-err',     test: v => /^\d{2}\.\d{2}\.\d{4}$/.test(v.trim()) },
+    { id: 'ev-time',     errId: 'ev-time-err',     test: v => /^\d{2}:\d{2}$/.test(v.trim()) },
+    { id: 'ev-location', errId: 'ev-location-err', test: v => v.trim().length > 0 },
+    { id: 'ev-capacity', errId: 'ev-capacity-err', test: v => parseInt(v) >= 1 },
+  ];
+
+  let valid = true;
+  fields.forEach(({ id, errId, test }) => {
+    const input = document.getElementById(id);
+    const err = document.getElementById(errId);
+    const ok = test(input.value);
+    input.classList.toggle('input-error', !ok);
+    err.classList.toggle('visible', !ok);
+    if (!ok) valid = false;
+  });
+
+  if (!valid) return;
+
   showToast('Събитието е публикувано!', true);
 }
 
@@ -519,5 +562,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelectorAll('.nav-item[data-tab]').forEach(el => {
     el.addEventListener('click', () => navTo(el.dataset.tab));
+  });
+
+  document.addEventListener('click', e => {
+    const item = e.target.closest('[data-tooltip]');
+    document.querySelectorAll('.tooltip-visible').forEach(el => el.classList.remove('tooltip-visible'));
+    if (item) {
+      item.classList.add('tooltip-visible');
+      setTimeout(() => item.classList.remove('tooltip-visible'), 2000);
+    }
   });
 });
