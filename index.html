@@ -65,7 +65,7 @@
 
   <div class="welcome-btns">
     <button class="btn btn-green btn-full btn-pill" onclick="go('screen-register')">Регистрация</button>
-    <button class="btn btn-outline-light btn-full btn-pill" onclick="go('screen-home')" style="color:var(--green);border-color:var(--border);">Влез в профила си</button>
+    <button class="btn btn-outline-light btn-full btn-pill" onclick="go('screen-login')" style="color:var(--green);border-color:var(--border);">Влез в профила си</button>
   </div>
 
   
@@ -102,15 +102,18 @@
 
     <div class="form-group">
       <label class="form-label">Име и фамилия *</label>
-      <input type="text" class="form-input" value="Мария Иванова" />
+      <input type="text" id="reg-name" class="form-input" placeholder="Мария Иванова" />
+      <div class="form-error" id="reg-name-err">Моля, въведи името си.</div>
     </div>
     <div class="form-group">
       <label class="form-label">Имейл *</label>
-      <input type="email" class="form-input" value="maria@uni.bg" />
+      <input type="email" id="reg-email" class="form-input" placeholder="maria@example.bg" />
+      <div class="form-error" id="reg-email-err">Моля, въведи валиден имейл адрес.</div>
     </div>
     <div class="form-group">
       <label class="form-label">Парола *</label>
-      <input type="password" class="form-input" value="password123" />
+      <input type="password" id="reg-password" class="form-input" placeholder="Минимум 6 символа" />
+      <div class="form-error" id="reg-password-err">Паролата трябва да е поне 6 символа.</div>
     </div>
 
     <div class="form-group">
@@ -144,9 +147,35 @@
 
     <button class="btn btn-green btn-full btn-pill" style="font-size:16px; padding:16px;" onclick="doRegister()">Създай профил</button>
 
-    <p style="text-align:center; margin-top:16px; font-size:14px; color:var(--text-muted);">
-      Вече имаш профил? <a onclick="go('screen-home')" style="color:var(--green); font-weight:600; cursor:pointer;">Влез</a>
+    <div style="height:20px;"></div>
+  </div>
+</div>
+
+<div id="screen-login" class="screen">
+  <div class="welcome-hands" style="height:220px;">
+    <img src="images/volunteers_2.jpg" alt="Volunteers" class="welcome-hero-img" />
+  </div>
+
+  <div class="reg-scroll">
+    <h1 class="title-xl" style="margin-bottom:4px;">Влез в профила си</h1>
+    <p class="text-sm" style="margin-bottom:24px;">Добре дошъл обратно!</p>
+
+    <div class="form-group">
+      <label class="form-label">Имейл *</label>
+      <input type="email" id="login-email" class="form-input" placeholder="твоят@имейл.bg" />
+      <div class="form-error" id="login-email-err">Моля, въведи валиден имейл адрес.</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Парола *</label>
+      <input type="password" id="login-password" class="form-input" placeholder="••••••••" />
+      <div class="form-error" id="login-password-err">Моля, въведи паролата си.</div>
+    </div>
+
+    <p style="text-align:right; margin-bottom:24px; font-size:13px;">
+      <a onclick="showToast('Изпратен имейл за смяна на парола')" style="color:var(--green); font-weight:600; cursor:pointer;">Забравена парола?</a>
     </p>
+
+    <button class="btn btn-green btn-full btn-pill" style="font-size:16px; padding:16px;" onclick="doLogin()">Влез</button>
 
     <div style="height:20px;"></div>
   </div>
@@ -155,25 +184,9 @@
 <div id="screen-home" class="screen">
   
   <div class="home-header" style="flex-shrink:0;">
-    <svg viewBox="0 0 390 190" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;">
-      <g transform="translate(10, 30) rotate(-18, 50, 95)" fill="#D96B5C" opacity="0.8">
-        <use href="#hand-shape"/>
-      </g>
-      <g transform="translate(115, 10) rotate(-5, 50, 95)" fill="#E8A0B8" opacity="0.8">
-        <use href="#hand-shape"/>
-      </g>
-      <g transform="translate(240, 15) rotate(8, 50, 95)" fill="#D4AE4C" opacity="0.8">
-        <use href="#hand-shape"/>
-      </g>
-      <g transform="translate(320, 35) rotate(20, 50, 95)" fill="#D4906C" opacity="0.5">
-        <use href="#hand-shape"/>
-      </g>
-      <g transform="translate(60, 50) rotate(5, 50, 95)" fill="#B8ACCC" opacity="0.45">
-        <use href="#hand-shape"/>
-      </g>
-    </svg>
+    <img src="images/volunteers_2.jpg" alt="Volunteers" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;" />
     <div class="home-header-content">
-      <div>
+      <div class="home-header-text">
         <div class="home-title">Volunteer Chain</div>
         <div class="home-subtitle">Добро утро, Мария! 3 нови събития за теб</div>
       </div>
@@ -186,16 +199,16 @@
     <div style="padding:12px 16px 0;">
       <div class="search-bar">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#BBB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" placeholder="Търси по категория, град..." />
+        <input type="text" id="home-search" placeholder="Търси по категория, град..." oninput="searchEvents()" />
       </div>
     </div>
     
     <div style="padding:10px 16px 0;">
-      <div class="chip-row">
-        <button class="chip chip-sm sel" onclick="setFilter(this)">Всички</button>
-        <button class="chip chip-sm" onclick="setFilter(this)">Екология</button>
-        <button class="chip chip-sm" onclick="setFilter(this)">Социални</button>
-        <button class="chip chip-sm" onclick="setFilter(this)">Животни</button>
+      <div class="chip-row" id="home-filter-row">
+        <button class="chip chip-sm sel" data-category="всички" onclick="setHomeFilter(this)">Всички</button>
+        <button class="chip chip-sm" data-category="екология" onclick="setHomeFilter(this)">Екология</button>
+        <button class="chip chip-sm" data-category="социални" onclick="setHomeFilter(this)">Социални</button>
+        <button class="chip chip-sm" data-category="животни" onclick="setHomeFilter(this)">Животни</button>
         <button class="chip chip-sm" style="padding:5px 10px;">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
         </button>
@@ -206,7 +219,7 @@
     <div style="padding:12px 16px 0; display:flex; flex-direction:column; gap:12px;">
 
       
-      <div class="event-card" onclick="openEvent('vitoshaPlant')">
+      <div class="event-card" data-search="засаждане дървета витоша екология бнт зелена българия" data-category="екология" onclick="openEvent('vitoshaPlant')">
         <div class="event-card-img">
           <div class="event-card-img-bg" style="background:url('images/forest-bg.png') center/cover no-repeat;"></div>
           <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(0,0,0,.15));"></div>
@@ -232,7 +245,7 @@
       </div>
 
       
-      <div class="event-card" onclick="openEvent('lunch')">
+      <div class="event-card" data-search="раздаване обяд красно село социална каритас българия" data-category="социални" onclick="openEvent('lunch')">
         <div class="event-card-img">
           <div class="event-card-img-bg" style="background:url('images/lunch-bg.png') center/cover no-repeat;"></div>
           <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(0,0,0,.15));"></div>
@@ -258,42 +271,48 @@
       </div>
 
       
-      <div class="sec-hdr" style="margin-top:4px;">
-        <span class="sec-title">Препоръчани за теб</span>
-        <a class="sec-link" onclick="showToast('Всички препоръки')">Виж всички</a>
+      <div id="recommended-section">
+        <div class="sec-hdr" style="margin-top:4px;">
+          <span class="sec-title">Препоръчани за теб</span>
+          <a class="sec-link" onclick="showToast('Всички препоръки')">Виж всички</a>
+        </div>
+
+        <div style="display:flex; gap:10px; overflow-x:auto; scrollbar-width:none; padding-bottom:4px; margin-bottom:4px;">
+          <div class="rec-card" data-search="разходки приют животни" data-category="животни" onclick="openEvent('animalShelter')">
+            <div class="rec-card-img">
+              <div style="width:100%;height:100%;background:url('images/shelter-bg.png') center/cover no-repeat;"></div>
+            </div>
+            <div class="rec-card-title">Разходки в приют</div>
+            <div class="rec-card-date">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              20 Апр
+            </div>
+          </div>
+          <div class="rec-card" data-search="почистване плаж екология море" data-category="екология" onclick="openEvent('beachClean')">
+            <div class="rec-card-img">
+              <div style="width:100%;height:100%;background:url('images/beach-bg.png') center/cover no-repeat;"></div>
+            </div>
+            <div class="rec-card-title">Почистване на плаж</div>
+            <div class="rec-card-date">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              22 Апр
+            </div>
+          </div>
+          <div class="rec-card" data-search="урок четене образование деца читалище" data-category="образование" onclick="openEvent('readingLesson')">
+            <div class="rec-card-img">
+              <div style="width:100%;height:100%;background:linear-gradient(135deg,rgba(74,20,140,0.7),rgba(206,147,216,0.5)), url('images/reading-bg.jpg') center/cover no-repeat;"></div>
+            </div>
+            <div class="rec-card-title">Урок по четене</div>
+            <div class="rec-card-date">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              25 Апр
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div style="display:flex; gap:10px; overflow-x:auto; scrollbar-width:none; padding-bottom:4px; margin-bottom:4px;">
-        <div class="rec-card" onclick="openEvent('animalShelter')">
-          <div class="rec-card-img">
-            <div style="width:100%;height:100%;background:url('images/shelter-bg.png') center/cover no-repeat;"></div>
-          </div>
-          <div class="rec-card-title">Разходки в приют</div>
-          <div class="rec-card-date">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            20 Апр
-          </div>
-        </div>
-        <div class="rec-card" onclick="openEvent('beachClean')">
-          <div class="rec-card-img">
-            <div style="width:100%;height:100%;background:url('images/beach-bg.png') center/cover no-repeat;"></div>
-          </div>
-          <div class="rec-card-title">Почистване на плаж</div>
-          <div class="rec-card-date">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            22 Апр
-          </div>
-        </div>
-        <div class="rec-card" onclick="openEvent('readingLesson')">
-          <div class="rec-card-img">
-            <div style="width:100%;height:100%;background:linear-gradient(135deg,rgba(74,20,140,0.7),rgba(206,147,216,0.5)), url('images/reading-bg.jpg') center/cover no-repeat;"></div>
-          </div>
-          <div class="rec-card-title">Урок по четене</div>
-          <div class="rec-card-date">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            25 Апр
-          </div>
-        </div>
+      <div id="no-results" style="display:none; text-align:center; padding:32px 16px; color:var(--text-muted); font-size:14px;">
+        Няма намерени събития за "<span id="no-results-query"></span>"
       </div>
 
       <div style="height:8px;"></div>

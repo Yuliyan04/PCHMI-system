@@ -61,6 +61,70 @@ function toggleChip(el) {
   el.classList.toggle('sel');
 }
 
+let activeHomeFilter = 'всички';
+
+function searchEvents() {
+  applyHomeFilters();
+}
+
+function setHomeFilter(btn) {
+  const category = btn.dataset.category;
+  const row = document.getElementById('home-filter-row');
+  const allBtn = row.querySelector('[data-category="всички"]');
+
+  if (category === 'всички' || activeHomeFilter === category) {
+    activeHomeFilter = 'всички';
+    row.querySelectorAll('.chip[data-category]').forEach(c => c.classList.remove('sel'));
+    allBtn.classList.add('sel');
+  } else {
+    activeHomeFilter = category;
+    row.querySelectorAll('.chip[data-category]').forEach(c => c.classList.remove('sel'));
+    btn.classList.add('sel');
+  }
+
+  applyHomeFilters();
+}
+
+function applyHomeFilters() {
+  const q          = (document.getElementById('home-search')?.value || '').trim().toLowerCase();
+  const filtering  = activeHomeFilter !== 'всички';
+  const searching  = q.length > 0;
+  const eventCards = document.querySelectorAll('#screen-home .event-card[data-category]');
+  const recCards   = document.querySelectorAll('#screen-home .rec-card[data-category]');
+  const recSection = document.getElementById('recommended-section');
+  const noResults  = document.getElementById('no-results');
+  const noResultsQ = document.getElementById('no-results-query');
+
+  let anyVisible = false;
+
+  eventCards.forEach(card => {
+    const matchesCat    = !filtering || card.dataset.category === activeHomeFilter;
+    const matchesSearch = !searching || card.dataset.search.includes(q);
+    const show = matchesCat && matchesSearch;
+    card.style.display = show ? '' : 'none';
+    if (show) anyVisible = true;
+  });
+
+  let anyRecVisible = false;
+  recCards.forEach(card => {
+    const matchesCat    = !filtering || card.dataset.category === activeHomeFilter;
+    const matchesSearch = !searching || card.dataset.search.includes(q);
+    const show = matchesCat && matchesSearch;
+    card.style.display = show ? '' : 'none';
+    if (show) anyRecVisible = true;
+  });
+
+  recSection.style.display = (searching || filtering) ? (anyRecVisible ? '' : 'none') : '';
+  if (anyRecVisible) anyVisible = true;
+
+  if (!anyVisible && (searching || filtering)) {
+    noResultsQ.textContent = searching ? q : activeHomeFilter;
+    noResults.style.display = 'block';
+  } else {
+    noResults.style.display = 'none';
+  }
+}
+
 function toggleTerms(btn) {
   const checked = btn.classList.toggle('terms-checked');
   btn.style.background = checked ? 'var(--green)' : 'var(--border)';
@@ -200,9 +264,90 @@ function goApply() {
   go('screen-apply');
 }
 
+function setFieldError(inputId, errId, message) {
+  const input = document.getElementById(inputId);
+  const err   = document.getElementById(errId);
+  if (!input || !err) return;
+  if (message) {
+    input.classList.add('input-error');
+    err.textContent = message;
+    err.classList.add('visible');
+  } else {
+    input.classList.remove('input-error');
+    err.classList.remove('visible');
+  }
+}
+
+function clearFieldError(inputId, errId) {
+  setFieldError(inputId, errId, null);
+}
+
+function isValidEmail(v) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
+}
+
 function doRegister() {
-  go('screen-home');
+  const name     = document.getElementById('reg-name');
+  const email    = document.getElementById('reg-email');
+  const password = document.getElementById('reg-password');
+  const toggle   = document.getElementById('terms-toggle');
+  let valid = true;
+
+  if (!name.value.trim()) {
+    setFieldError('reg-name', 'reg-name-err', 'Моля, въведи името си.');
+    valid = false;
+  } else {
+    clearFieldError('reg-name', 'reg-name-err');
+  }
+
+  if (!isValidEmail(email.value)) {
+    setFieldError('reg-email', 'reg-email-err', 'Моля, въведи валиден имейл адрес.');
+    valid = false;
+  } else {
+    clearFieldError('reg-email', 'reg-email-err');
+  }
+
+  if (password.value.length < 6) {
+    setFieldError('reg-password', 'reg-password-err', 'Паролата трябва да е поне 6 символа.');
+    valid = false;
+  } else {
+    clearFieldError('reg-password', 'reg-password-err');
+  }
+
+  if (!toggle || !toggle.classList.contains('terms-checked')) {
+    showToast('Моля, приеми условията за ползване.');
+    valid = false;
+  }
+
+  if (!valid) return;
+
+  go('screen-login');
   showToast('Профилът е създаден успешно!', true);
+}
+
+function doLogin() {
+  const email    = document.getElementById('login-email');
+  const password = document.getElementById('login-password');
+  let valid = true;
+
+  if (!isValidEmail(email.value)) {
+    setFieldError('login-email', 'login-email-err', 'Моля, въведи валиден имейл адрес.');
+    valid = false;
+  } else {
+    clearFieldError('login-email', 'login-email-err');
+  }
+
+  if (!password.value.trim()) {
+    setFieldError('login-password', 'login-password-err', 'Моля, въведи паролата си.');
+    valid = false;
+  } else {
+    clearFieldError('login-password', 'login-password-err');
+  }
+
+  if (!valid) return;
+
+  go('screen-home');
+  showToast('Влязохте успешно!', true);
 }
 
 function publishEvent() {
