@@ -2,7 +2,10 @@
   "permissions": {
     "allow": [
       "Bash(ls \"c:\\\\Users\\\\Yulian\\\\Desktop\\\\pchmi\\\\\")",
-      "Read(//c/Users/Yulian/Desktop/**)"
+      "Read(//c/Users/Yulian/Desktop/**)",
+      "Bash(git pull *)",
+      "Bash(git stash *)",
+      "Bash(git push *)"
     ]
   }
 }
