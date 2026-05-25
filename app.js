@@ -61,6 +61,14 @@ function toggleChip(el) {
   el.classList.toggle('sel');
 }
 
+function toggleTerms(btn) {
+  const checked = btn.classList.toggle('terms-checked');
+  btn.style.background = checked ? 'var(--green)' : 'var(--border)';
+  btn.innerHTML = checked
+    ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
+    : '';
+}
+
 function setFilter(el) {
   const parent = el.closest('.chips-row, .filter-row, .filter-chips');
   if (parent) {

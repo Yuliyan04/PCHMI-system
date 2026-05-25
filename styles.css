@@ -249,9 +249,10 @@ html, body {
 #screen-welcome { background: var(--bg); }
 .welcome-hands {
   position: relative; height: 260px; overflow: hidden;
-  background: #F0EBE0; flex-shrink: 0;
+  background: #fff; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
 }
-.welcome-hands svg { width: 100%; height: 100%; }
+.welcome-hero-img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
 .welcome-title-area { font-family: var(--serif); font-size: 32px; font-weight: 800; color: var(--text); text-align: center; }
 .welcome-body { padding: 20px 24px 0; }
 .welcome-subtitle { font-size: 15px; color: var(--text-mid); text-align: center; line-height: 1.6; margin: 6px 0 24px; }
