@@ -126,6 +126,30 @@
       </p>
     </label>
 
+    <button type="button" class="btn btn-outline btn-full btn-pill" style="margin-bottom:16px; font-size:14px;" onclick="toggleOrgSection()">
+      Регистрирай се като представител на организация (по желание)
+    </button>
+
+    <div id="org-section" style="display:none; background:var(--bg); border-radius:var(--r-md); border:1.5px solid var(--border); padding:16px; margin-bottom:24px;">
+      <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px; line-height:1.5;">Въведи данните на организацията. Заявката ще бъде прегледана и одобрена от администратор.</p>
+      <div class="form-group">
+        <label class="form-label">ЕИК / Булстат *</label>
+        <input type="text" id="org-eik" class="form-input" placeholder="123456789" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Наименование на организацията *</label>
+        <input type="text" id="org-name" class="form-input" placeholder="Въведи наименование" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Вашата длъжност *</label>
+        <input type="text" id="org-role" class="form-input" placeholder="напр. Координатор, Директор..." />
+      </div>
+      <div class="form-group" style="margin-bottom:0;">
+        <label class="form-label">Служебен имейл *</label>
+        <input type="email" id="org-work-email" class="form-input" placeholder="служебен@организация.bg" />
+      </div>
+    </div>
+
     <button class="btn btn-green btn-full btn-pill" style="font-size:16px; padding:16px;" onclick="doRegister()">Създай профил</button>
 
     <div style="height:20px;"></div>
@@ -366,7 +390,7 @@
   </div>
 
   <div class="event-bottom-bar">
-    <button class="btn btn-green btn-full btn-pill" style="font-size:16px; padding:16px;" onclick="goApply()">Кандидатствай</button>
+    <button id="event-action-btn" class="btn btn-green btn-full btn-pill" style="font-size:16px; padding:16px;" onclick="goApply()">Кандидатствай</button>
   </div>
 
   <nav class="bottom-nav">
@@ -426,7 +450,7 @@
         <div class="cert-participated">е участвала в доброволческо събитие</div>
         <div class="cert-event-box">
           <div class="cert-event-title" id="cert-event-title">Засаждане на дървета - Витоша</div>
-          <div class="cert-event-sub" id="cert-event-sub">18 Април 2026 · БНТ Зелена България</div>
+          <div class="cert-event-sub" id="cert-event-sub">18 Апр 2026 · БНТ Зелена България</div>
         </div>
         <div class="cert-footer-row">
           <span class="cert-id">ID: VC-2025-04891</span>
@@ -573,7 +597,7 @@
       <span class="sec-title">Предстоящи участия</span>
     </div>
 
-    <div class="upcoming-card" onclick="openQR('Засаждане на дървета - Витоша', '18 Април 2026', 'БНТ Зелена България')">
+    <div class="upcoming-card" onclick="openQR('Засаждане на дървета - Витоша', '18 Апр 2026', 'БНТ Зелена България')">
       <div class="upcoming-date-box green">
         <span class="upcoming-day">18</span>
         <span class="upcoming-mon">АПР</span>
@@ -583,9 +607,12 @@
         <div class="upcoming-sub">09:00 · БНТ Зелена България</div>
       </div>
       <span class="status status-green">Записан</span>
+      <button onclick="event.stopPropagation(); openGroupChat('Засаждане на дървета - Витоша')" style="background:none; border:none; cursor:pointer; padding:6px; color:var(--text-muted); flex-shrink:0;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </button>
     </div>
 
-    <div class="upcoming-card" onclick="openQR('Раздаване на обяд', '18 Април 2026', 'Каритас България')">
+    <div class="upcoming-card" onclick="openQR('Раздаване на обяд', '18 Апр 2026', 'Каритас България')">
       <div class="upcoming-date-box green">
         <span class="upcoming-day">18</span>
         <span class="upcoming-mon">АПР</span>
@@ -595,6 +622,9 @@
         <div class="upcoming-sub">10:00 · Каритас България</div>
       </div>
       <span class="status status-orange">Одобрен</span>
+      <button onclick="event.stopPropagation(); openGroupChat('Раздаване на обяд')" style="background:none; border:none; cursor:pointer; padding:6px; color:var(--text-muted); flex-shrink:0;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </button>
     </div>
 
     <div class="upcoming-card" onclick="openQR('Урок по четене', '25 Април 2026', 'Читалище Слово')">
@@ -607,6 +637,21 @@
         <div class="upcoming-sub">14:00 · Читалище Слово</div>
       </div>
       <span class="status status-green">Записан</span>
+      <button onclick="event.stopPropagation(); openGroupChat('Урок по четене')" style="background:none; border:none; cursor:pointer; padding:6px; color:var(--text-muted); flex-shrink:0;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+
+    <div class="upcoming-card" onclick="openEvent('vitoshaPlant')">
+      <div class="upcoming-date-box" style="background:#e0e0e0;">
+        <span class="upcoming-day" style="color:#757575;">18</span>
+        <span class="upcoming-mon" style="color:#757575;">АПР</span>
+      </div>
+      <div style="flex:1;">
+        <div class="upcoming-title">Засаждане на дървета - Витоша</div>
+        <div class="upcoming-sub">09:00 · БНТ Зелена България</div>
+      </div>
+      <span class="status" style="background:#f0f0f0; color:#757575;">В изчакване</span>
     </div>
 
     <div class="sec-hdr" style="margin-top:20px; margin-bottom:12px;">
@@ -695,7 +740,7 @@
     
     <div class="profile-section" style="margin-top:12px;">
       <div class="profile-sec-hdr"><span class="profile-sec-title">Сертификати</span></div>
-      <div class="cert-row" style="background:var(--green); margin:0 0 2px; border-radius:0; cursor:pointer;" onclick="openQR('Засаждане на дървета - Витоша', '18 Април 2026', 'БНТ Зелена България')">
+      <div class="cert-row" style="background:var(--green); margin:0 0 2px; border-radius:0; cursor:pointer;" onclick="openQR('Засаждане на дървета - Витоша', '18 Апр 2026', 'БНТ Зелена България')">
         <div class="cert-row-icon" style="background:rgba(255,255,255,.15);">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         </div>
@@ -732,7 +777,10 @@
 
 
     <div class="profile-section" style="margin-top:12px;">
-      <div class="profile-sec-hdr"><span class="profile-sec-title">Моите скипи</span></div>
+      <div class="profile-sec-hdr">
+        <span class="profile-sec-title">Моите скипи</span>
+        <button class="btn btn-green btn-sm btn-pill" onclick="go('screen-create-team')">+ Нов екип</button>
+      </div>
       <div class="team-row" onclick="go('screen-team')">
         <div>
           <div class="team-row-name">Green Warriors</div>
@@ -810,7 +858,8 @@
         <img src="images/report-tree1.jpg" alt="" style="width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:10px;">
         <img src="images/report-tree2.jpg" alt="" style="width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:10px;">
       </div>
-      <img src="images/report-event3.jpg" alt="" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:10px; margin-bottom:20px;">
+      <img src="images/report-event3.jpg" alt="" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:10px; margin-bottom:16px;">
+      <button class="btn btn-outline btn-full btn-pill" style="padding:15px; margin-bottom:20px;" onclick="go('screen-review')">Остави отзив</button>
     </div>
   </div>
 
@@ -856,29 +905,45 @@
 
     
     <div class="org-event-card" style="opacity:0.75;">
-      <div class="org-event-hdr">
-        <span class="org-event-title">Засаждане - Витоша</span>
-        <span class="status" style="background:#e0e0e0; color:#757575;">Приключило</span>
+      <div onclick="go('screen-past-event')" style="cursor:pointer;">
+        <div class="org-event-hdr">
+          <span class="org-event-title">Засаждане - Витоша</span>
+          <span class="status" style="background:#e0e0e0; color:#757575;">Приключило</span>
+        </div>
+        <div class="org-event-meta">18 апр · 30/30 доброволци</div>
+        <div class="progress-track"><div class="progress-fill" style="width:100%; background:#9e9e9e;"></div></div>
       </div>
-      <div class="org-event-meta">18 апр · 30/30 доброволци</div>
-      <div class="progress-track"><div class="progress-fill" style="width:100%; background:#9e9e9e;"></div></div>
       <div class="org-event-btns">
         <button class="btn btn-light btn-pill" onclick="go('screen-post-report')">Доклад</button>
         <button class="btn btn-outline btn-pill" disabled style="opacity:.4; cursor:not-allowed;">Подбери</button>
+        <button class="btn btn-outline btn-pill btn-icon" disabled style="opacity:.4; cursor:not-allowed;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </button>
+        <button class="btn btn-outline btn-pill btn-icon" disabled style="opacity:.4; cursor:not-allowed;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </button>
       </div>
     </div>
 
     
     <div class="org-event-card">
-      <div class="org-event-hdr">
-        <span class="org-event-title">Почистване - Черноморие</span>
-        <span class="status status-orange">Предстоящо</span>
+      <div onclick="openEvent('chernomorie')" style="cursor:pointer;">
+        <div class="org-event-hdr">
+          <span id="dash-event-title" class="org-event-title">Почистване - Черноморие</span>
+          <span class="status status-orange">Предстоящо</span>
+        </div>
+        <div id="dash-event-meta" class="org-event-meta">22 апр · 8/50 доброволци</div>
+        <div class="progress-track"><div id="dash-event-progress" class="progress-fill" style="width:16%;"></div></div>
       </div>
-      <div class="org-event-meta">22 Апр · 8/50 доброволци</div>
-      <div class="progress-track"><div class="progress-fill" style="width:16%;"></div></div>
       <div class="org-event-btns">
-        <button class="btn btn-light btn-pill" style="opacity:.45;" onclick="showToast('Докладът не е наличен')">Доклад</button>
+        <button class="btn btn-light btn-pill" disabled style="opacity:.4; cursor:not-allowed;">Доклад</button>
         <button class="btn btn-outline btn-pill" onclick="openVolunteerSelection('Почистване - Черноморие')">Подбери</button>
+        <button class="btn btn-outline btn-pill btn-icon" onclick="openGroupChat('Почистване - Черноморие', true)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </button>
+        <button class="btn btn-outline btn-pill btn-icon" onclick="go('screen-edit-event')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </button>
       </div>
     </div>
 
@@ -945,10 +1010,11 @@
       </div>
 
       
-      <button class="btn btn-green btn-full btn-pill" style="padding:15px;">
+      <button class="btn btn-green btn-full btn-pill" style="padding:15px;" onclick="showToast('Докладът е публикуван', true)">
         Публикувай доклада
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </button>
+      <button class="btn btn-outline btn-full btn-pill" style="padding:15px;" onclick="go('screen-review-volunteers')">Оцени доброволците</button>
       <div style="height:8px;"></div>
     </div>
   </div>
@@ -959,6 +1025,133 @@
     <button class="nav-btn" onclick="navTo('calendar')"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>Календар</span></button>
     <button class="nav-btn active" onclick="navTo('profile')"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Профил</span></button>
   </nav>
+</div>
+
+<div id="screen-review" class="screen">
+  <div style="padding:52px 20px 14px; flex-shrink:0; background:var(--white); border-bottom:1px solid var(--border);">
+    <button class="back-btn" onclick="back()" style="margin-bottom:10px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    </button>
+    <h2 class="title-xl">Остави отзив</h2>
+    <p class="text-sm" style="margin-top:2px;">Засаждане на дървета - Витоша · БНТ Зелена България</p>
+  </div>
+
+  <div class="create-scroll">
+    <div style="height:20px;"></div>
+
+    <div class="form-group" style="align-items:center; text-align:center;">
+      <label class="form-label" style="margin-bottom:16px;">Обща оценка</label>
+      <div id="review-stars" style="display:flex; gap:10px; justify-content:center; margin-bottom:4px;">
+        <svg onclick="setReviewStar(1)" data-star="1" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--border)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="cursor:pointer;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg onclick="setReviewStar(2)" data-star="2" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--border)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="cursor:pointer;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg onclick="setReviewStar(3)" data-star="3" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--border)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="cursor:pointer;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg onclick="setReviewStar(4)" data-star="4" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--border)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="cursor:pointer;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg onclick="setReviewStar(5)" data-star="5" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--border)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="cursor:pointer;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </div>
+      <div id="review-star-label" style="font-size:13px; color:var(--text-muted); height:18px;"></div>
+    </div>
+
+    <div class="form-group" style="margin-top:8px;">
+      <label class="form-label">Коментар <span style="color:var(--text-muted); font-weight:400;">(по желание)</span></label>
+      <textarea id="review-text" class="form-textarea" placeholder="Сподели впечатленията си от събитието..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" style="margin-bottom:10px;">Какво оцени най-много?</label>
+      <div class="chip-row" style="flex-wrap:wrap; gap:8px;">
+        <button class="chip" onclick="toggleChip(this)">Организация</button>
+        <button class="chip" onclick="toggleChip(this)">Координация</button>
+        <button class="chip" onclick="toggleChip(this)">Каузата</button>
+        <button class="chip" onclick="toggleChip(this)">Екипът</button>
+        <button class="chip" onclick="toggleChip(this)">Локацията</button>
+      </div>
+    </div>
+
+    <div style="height:16px;"></div>
+  </div>
+
+  <div style="position:absolute; bottom:0; left:0; right:0; padding:12px 20px 28px; background:var(--white); border-top:1px solid var(--border);">
+    <button class="btn btn-green btn-full btn-pill" style="font-size:16px; padding:16px;" onclick="submitReview()">Изпрати отзива</button>
+  </div>
+
+  <nav class="bottom-nav" style="display:none;"></nav>
+</div>
+
+<div id="screen-review-volunteers" class="screen">
+  <div style="padding:52px 20px 14px; flex-shrink:0; background:var(--white); border-bottom:1px solid var(--border);">
+    <button class="back-btn" onclick="back()" style="margin-bottom:10px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    </button>
+    <h2 class="title-xl">Оцени доброволците</h2>
+    <p class="text-sm" style="margin-top:2px;">Засаждане на дървета - Витоша · 27 участника</p>
+  </div>
+
+  <div class="create-scroll">
+    <div style="height:12px;"></div>
+    <p style="font-size:13px; color:var(--text-muted); padding:0 4px; margin-bottom:16px; line-height:1.5;">Оценките се отразяват в профила на всеки доброволец и влияят на препоръките им за бъдещи събития.</p>
+
+    <div id="vol-review-list" style="display:flex; flex-direction:column; gap:12px;">
+
+      <div class="profile-section" style="padding:14px 16px;">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+          <div class="avatar av-md avatar-green">МИ</div>
+          <div style="flex:1;">
+            <div style="font-size:15px; font-weight:600;">Мария Иванова</div>
+            <div style="font-size:12px; color:var(--text-muted);">12 участия</div>
+          </div>
+        </div>
+        <div style="display:flex; gap:6px;" data-vol="мария">
+          <svg onclick="setVolStar(this,1)" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--border)" stroke-width="1.5" style="cursor:pointer;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg onclick="setVolStar(this,2)" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--border)" stroke-width="1.5" style="cursor:pointer;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg onclick="setVolStar(this,3)" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--border)" stroke-width="1.5" style="cursor:pointer;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg onclick="setVolStar(this,4)" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--border)" stroke-width="1.5" style="cursor:pointer;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg onclick="setVolStar(this,5)" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--border)" stroke-width="1.5" style="cursor:pointer;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+      </div>
+
+      <div class="profile-section" style="padding:14px 16px;">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+          <div class="avatar av-md" style="background:#7B1FA2; color:white;">ИМ</div>
+          <div style="flex:1;">
+            <div style="font-size:15px; font-weight:600;">Иван Михайлов</div>
+            <div style="font-size:12px; color:var(--text-muted);">5 участия</div>
+          </div>
+        </div>
+        <div style="display:flex; gap:6px;" data-vol="иван">
+          <svg onclick="setVolStar(this,1)" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--border)" stroke-width="1.5" style="cursor:pointer;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg onclick="setVolStar(this,2)" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--border)" stroke-width="1.5" style="cursor:pointer;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg onclick="setVolStar(this,3)" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--border)" stroke-width="1.5" style="cursor:pointer;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg onclick="setVolStar(this,4)" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--border)" stroke-width="1.5" style="cursor:pointer;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg onclick="setVolStar(this,5)" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--border)" stroke-width="1.5" style="cursor:pointer;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+      </div>
+
+      <div class="profile-section" style="padding:14px 16px;">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+          <div class="avatar av-md" style="background:#1565C0; color:white;">СП</div>
+          <div style="flex:1;">
+            <div style="font-size:15px; font-weight:600;">Симона Попова</div>
+            <div style="font-size:12px; color:var(--text-muted);">3 участия</div>
+          </div>
+        </div>
+        <div style="display:flex; gap:6px;" data-vol="симона">
+          <svg onclick="setVolStar(this,1)" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--border)" stroke-width="1.5" style="cursor:pointer;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg onclick="setVolStar(this,2)" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--border)" stroke-width="1.5" style="cursor:pointer;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg onclick="setVolStar(this,3)" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--border)" stroke-width="1.5" style="cursor:pointer;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg onclick="setVolStar(this,4)" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--border)" stroke-width="1.5" style="cursor:pointer;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg onclick="setVolStar(this,5)" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--border)" stroke-width="1.5" style="cursor:pointer;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+      </div>
+
+    </div>
+    <div style="height:16px;"></div>
+  </div>
+
+  <div style="position:absolute; bottom:0; left:0; right:0; padding:12px 20px 28px; background:var(--white); border-top:1px solid var(--border);">
+    <button class="btn btn-green btn-full btn-pill" style="font-size:16px; padding:16px;" onclick="submitVolReviews()">Запази оценките</button>
+  </div>
+
+  <nav class="bottom-nav" style="display:none;"></nav>
 </div>
 
 <div id="screen-create-event" class="screen">
@@ -978,7 +1171,7 @@
     </div>
     <div class="form-group">
       <label class="form-label">Описание *</label>
-      <textarea id="ev-desc" class="form-textarea" placeholder="Опиши събитието — какво ще се прави, какво да носят участниците..."></textarea>
+      <textarea id="ev-desc" class="form-textarea" placeholder="Опиши събитието- какво ще се прави, какво да носят участниците..."></textarea>
       <div class="form-error" id="ev-desc-err">Моля, добави описание на събитието.</div>
     </div>
     <div class="form-row">
@@ -1046,6 +1239,76 @@
 
   <div style="position:absolute; bottom:0; left:0; right:0; padding:12px 20px 28px; background:white; border-top:1px solid var(--border);">
     <button class="btn btn-green btn-full btn-pill" style="font-size:16px; padding:15px;" onclick="publishEvent()">Публикувай</button>
+  </div>
+
+  <nav class="bottom-nav" style="bottom:70px; border-top:none; box-shadow:none; background:transparent; display:none;"></nav>
+</div>
+
+<div id="screen-edit-event" class="screen">
+  <div style="padding:52px 20px 14px; flex-shrink:0; background:var(--white); border-bottom:1px solid var(--border);">
+    <button class="back-btn" onclick="back()" style="margin-bottom:10px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    </button>
+    <h2 class="title-xl">Редактирай събитие</h2>
+  </div>
+
+  <div class="create-scroll">
+    <div style="height:16px;"></div>
+    <div class="form-group">
+      <label class="form-label">Заглавие *</label>
+      <input id="edit-ev-title" type="text" class="form-input" value="Почистване - Черноморие" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">Описание *</label>
+      <textarea class="form-textarea">Почистване на крайбрежната ивица около Черноморие. Носете подходящо облекло и обувки. Ще бъдат осигурени ръкавици и торби.</textarea>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Дата *</label>
+        <input id="edit-ev-date" type="text" class="form-input" value="22.04.2026" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Час *</label>
+        <input id="edit-ev-time" type="text" class="form-input" value="09:00" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Локация *</label>
+      <input id="edit-ev-location" type="text" class="form-input" value="Черноморие, плажна ивица" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">Максимален брой доброволци *</label>
+      <input id="edit-ev-capacity" type="number" class="form-input" value="50" min="1" />
+    </div>
+    <div class="form-group">
+      <label class="form-label" style="margin-bottom:10px;">Категория</label>
+      <div class="chip-row" style="flex-wrap:wrap; gap:8px;">
+        <button class="chip sel" onclick="toggleChip(this)">Екология</button>
+        <button class="chip sel" onclick="toggleChip(this)">Физически</button>
+        <button class="chip" onclick="toggleChip(this)">Социална</button>
+        <button class="chip" onclick="toggleChip(this)">Медицинска</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label" style="margin-bottom:8px;">Формуляр *</label>
+      <div class="form-type-btns">
+        <button class="form-type-btn sel" onclick="setTypeBtn(this)">По шаблон</button>
+        <button class="form-type-btn" onclick="setTypeBtn(this)">Персонален</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label" style="margin-bottom:8px;">Допълнителни документи</label>
+      <button class="btn btn-outline btn-full btn-pill" style="padding:13px; gap:10px;" onclick="showToast('Избери файл от устройството')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Прикачи файл
+      </button>
+    </div>
+    <div style="height:16px;"></div>
+  </div>
+
+  <div style="position:absolute; bottom:0; left:0; right:0; padding:12px 20px 28px; background:white; border-top:1px solid var(--border); display:flex; gap:10px;">
+    <button class="btn btn-outline btn-pill" style="flex:1; padding:15px; color:#E53935; border-color:#E53935;" onclick="showToast('Редактирането е отменено'); back()">Отмени</button>
+    <button class="btn btn-green btn-pill" style="flex:2; font-size:16px; padding:15px;" onclick="saveEditedEvent()">Запази промените</button>
   </div>
 
   <nav class="bottom-nav" style="bottom:70px; border-top:none; box-shadow:none; background:transparent; display:none;"></nav>
@@ -1408,6 +1671,121 @@
     <button class="nav-btn" onclick="navTo('calendar')"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>Календар</span></button>
     <button class="nav-btn active" onclick="navTo('profile')"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Профил</span></button>
   </nav>
+</div>
+
+<div id="screen-create-team" class="screen">
+  <div style="padding:52px 20px 14px; flex-shrink:0; background:var(--white); border-bottom:1px solid var(--border);">
+    <button class="back-btn" onclick="back()" style="margin-bottom:10px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    </button>
+    <h2 class="title-xl">Нов екип</h2>
+  </div>
+
+  <div class="create-scroll">
+    <div style="height:16px;"></div>
+
+    <div class="form-group">
+      <label class="form-label">Име на екипа *</label>
+      <input type="text" id="team-name" class="form-input" placeholder="напр. Green Warriors" />
+      <div class="form-error" id="team-name-err">Моля, въведи име на екипа.</div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Описание</label>
+      <textarea id="team-desc" class="form-textarea" placeholder="Какво прави вашият екип, с каква цел е създаден..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" style="margin-bottom:10px;">Фокус области</label>
+      <div class="chip-row" style="flex-wrap:wrap; gap:8px;">
+        <button class="chip" onclick="toggleChip(this)">Екология</button>
+        <button class="chip" onclick="toggleChip(this)">Социална</button>
+        <button class="chip" onclick="toggleChip(this)">Образование</button>
+        <button class="chip" onclick="toggleChip(this)">Животни</button>
+        <button class="chip" onclick="toggleChip(this)">Физически</button>
+        <button class="chip" onclick="toggleChip(this)">Деца</button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" style="margin-bottom:8px;">Тип екип</label>
+      <div class="form-type-btns">
+        <button class="form-type-btn sel" onclick="setTypeBtn(this)">Отворен</button>
+        <button class="form-type-btn" onclick="setTypeBtn(this)">Затворен</button>
+      </div>
+      <p style="font-size:12px; color:var(--text-muted); margin-top:8px; line-height:1.5;">Отворен- всеки може да се присъедини. Затворен- само с покана.</p>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" style="margin-bottom:10px;">Покани членове</label>
+      <div style="display:flex; gap:8px;">
+        <input type="email" id="team-invite-email" class="form-input" placeholder="Имейл адрес" style="flex:1;" />
+        <button class="btn btn-outline btn-pill" style="flex-shrink:0; padding:0 18px;" onclick="addTeamMember()">Добави</button>
+      </div>
+      <div class="form-error" id="team-invite-err" style="margin-top:6px;"></div>
+      <div id="team-members-list" style="margin-top:10px; display:flex; flex-direction:column; gap:6px;"></div>
+    </div>
+
+    <div style="height:16px;"></div>
+  </div>
+
+  <div style="position:absolute; bottom:0; left:0; right:0; padding:12px 20px 28px; background:var(--white); border-top:1px solid var(--border);">
+    <button class="btn btn-green btn-full btn-pill" style="font-size:16px; padding:16px;" onclick="doCreateTeam()">Създай екип</button>
+  </div>
+
+  <nav class="bottom-nav" style="display:none;"></nav>
+</div>
+
+<div id="screen-group-chat" class="screen">
+  <div style="padding:52px 20px 12px; flex-shrink:0; background:var(--white); border-bottom:1px solid var(--border);">
+    <button class="back-btn" onclick="back()" style="margin-bottom:10px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    </button>
+    <h2 class="title-xl" id="chat-event-title">Групов чат</h2>
+    <p class="text-sm" id="chat-member-count" style="margin-top:2px;">Участници в събитието</p>
+  </div>
+
+  <div id="chat-messages" style="flex:1; overflow-y:auto; padding:16px 20px 16px; display:flex; flex-direction:column; gap:14px; background:var(--bg);">
+    <div style="text-align:center;">
+      <span style="font-size:11px; color:var(--text-muted); background:var(--bg); padding:4px 12px; border-radius:20px; border:1px solid var(--border);">17 Апр 2026</span>
+    </div>
+
+    <div style="display:flex; gap:8px; align-items:flex-end;">
+      <div class="avatar av-sm" style="background:var(--green); color:white; flex-shrink:0; font-size:11px;">БЗ</div>
+      <div>
+        <div style="font-size:11px; color:var(--text-muted); margin-bottom:4px;">Организатор · 10:30</div>
+        <div style="background:var(--white); border:1px solid var(--border); border-radius:16px 16px 16px 4px; padding:10px 14px; font-size:14px; max-width:230px; line-height:1.5;">Здравейте! Напомняме, че утре срещата е в 09:00 при Вход Бояна. Носете удобни обувки.</div>
+      </div>
+    </div>
+
+    <div style="display:flex; flex-direction:row-reverse; gap:8px; align-items:flex-end;">
+      <div class="avatar av-sm" style="background:var(--green); color:white; flex-shrink:0; font-size:11px;">БЗ</div>
+      <div style="display:flex; flex-direction:column; align-items:flex-end;">
+        <div style="font-size:11px; color:var(--text-muted); margin-bottom:4px;">Организатор · 11:00</div>
+        <div style="background:var(--green); color:white; border-radius:16px 16px 4px 16px; padding:10px 14px; font-size:14px; max-width:230px; line-height:1.5;">До утре! Ще имам ли нужда от инструменти?</div>
+      </div>
+    </div>
+
+    <div style="display:flex; gap:8px; align-items:flex-end;">
+      <div class="avatar av-sm" style="background:var(--green); color:white; flex-shrink:0; font-size:11px;">БЗ</div>
+      <div>
+        <div style="font-size:11px; color:var(--text-muted); margin-bottom:4px;">Организатор · 11:05</div>
+        <div style="background:var(--white); border:1px solid var(--border); border-radius:16px 16px 16px 4px; padding:10px 14px; font-size:14px; max-width:230px; line-height:1.5;">Всичко е осигурено — лопати, ръкавици и торби. Ще се видим утре!</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="chat-input-bar" style="padding:10px 16px 28px; background:var(--white); border-top:1px solid var(--border); display:none; gap:8px; align-items:center; flex-shrink:0;">
+    <input type="text" id="chat-input" class="form-input" placeholder="Съобщение..." style="flex:1;" onkeydown="if(event.key==='Enter') sendChatMessage()" />
+    <button onclick="sendChatMessage()" style="background:var(--green); border:none; border-radius:50%; width:42px; height:42px; min-width:42px; display:flex; align-items:center; justify-content:center; cursor:pointer;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+  <div id="chat-readonly-bar" style="padding:12px 20px 28px; background:var(--bg); border-top:1px solid var(--border); text-align:center; flex-shrink:0;">
+    <p style="font-size:13px; color:var(--text-muted);">Само организаторите могат да изпращат съобщения.</p>
+  </div>
+
+  <nav class="bottom-nav" style="display:none;"></nav>
 </div>
 
 <div id="screen-apply" class="screen">

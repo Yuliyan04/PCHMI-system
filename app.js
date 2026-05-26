@@ -147,6 +147,34 @@ function toggleTerms(btn) {
     : '';
 }
 
+function toggleOrgSection() {
+  const section = document.getElementById('org-section');
+  const isOpen = section.style.display !== 'none';
+  section.style.display = isOpen ? 'none' : 'block';
+}
+
+function saveEditedEvent() {
+  const BG_MONTHS = ['яну','фев','мар','апр','май','юни','юли','авг','сеп','окт','ное','дек'];
+
+  const title    = document.getElementById('edit-ev-title').value.trim();
+  const date     = document.getElementById('edit-ev-date').value.trim();
+  const capacity = document.getElementById('edit-ev-capacity').value.trim();
+
+  if (title) document.getElementById('dash-event-title').textContent = title;
+  if (date && capacity) {
+    const parts = date.split('.');
+    const day   = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10);
+    const label = day + ' ' + (BG_MONTHS[month - 1] || parts[1]);
+    const filled = document.getElementById('dash-event-progress');
+    const volunteers = filled ? Math.round(parseFloat(filled.style.width) / 100 * parseInt(capacity)) : 8;
+    document.getElementById('dash-event-meta').textContent =
+      label + ' · ' + volunteers + '/' + capacity + ' доброволци';
+  }
+  showToast('Промените са запазени', true);
+  back();
+}
+
 function setCauseFilter(el) {
   const row = el.closest('.chip-row');
   const allBtn = row.querySelector('[data-category="all"]');
@@ -222,9 +250,10 @@ const EVENTS = {
     date: '18 Април 2026, 09:00-16:00',
     location: 'Природен парк Витоша, Вход Бояна',
     org: 'БНТ Зелена България',
-    capacity: 18,
+    capacity: 30,
     maxCapacity: 30,
-    pct: 40,
+    pct: 100,
+    full: true,
     gradient: "url('images/forest-bg.png') center/cover no-repeat",
     description: 'Присъедини се към нас за залесяване в Природен парк Витоша. Ще засадим над 200 дървета заедно с местната общност.'
   },
@@ -251,6 +280,18 @@ const EVENTS = {
     pct: 33,
     gradient: "url('images/shelter-bg.png') center/cover no-repeat",
     description: 'Помогни на бездомните кучета и котки — разходки, игра и социализация. Всеки доброволец е добре дошъл!'
+  },
+  chernomorie: {
+    title: 'Почистване - Черноморие',
+    tags: ['Екология', 'Физически', 'Групова'],
+    date: '22 Апр 2026, 09:00',
+    location: 'Черноморие, плажна ивица',
+    org: 'БНТ Зелена България',
+    capacity: 8,
+    maxCapacity: 50,
+    pct: 16,
+    gradient: "url('images/beach-bg.png') center/cover no-repeat",
+    description: 'Почистване на крайбрежната ивица около Черноморие. Носете подходящо облекло и обувки. Ще бъдат осигурени ръкавици и торби.'
   },
   beachClean: {
     title: 'Почистване на плажа',
@@ -314,7 +355,168 @@ function openEvent(key) {
   const descEl = document.getElementById('event-desc');
   if (descEl) descEl.textContent = ev.description;
 
+  const actionBtn = document.getElementById('event-action-btn');
+  if (actionBtn) {
+    if (ev.full) {
+      actionBtn.textContent = 'Запиши се в списъка на чакащи';
+      actionBtn.className = 'btn btn-outline btn-full btn-pill';
+      actionBtn.style.cssText = 'font-size:16px; padding:16px;';
+      actionBtn.onclick = joinWaitlist;
+    } else {
+      actionBtn.textContent = 'Кандидатствай';
+      actionBtn.className = 'btn btn-green btn-full btn-pill';
+      actionBtn.style.cssText = 'font-size:16px; padding:16px;';
+      actionBtn.onclick = goApply;
+    }
+  }
+
   go('screen-event-detail');
+}
+
+const STAR_LABELS = ['', 'Лошо', 'Задоволително', 'Добро', 'Много добро', 'Отлично'];
+
+function setReviewStar(n) {
+  const stars = document.querySelectorAll('#review-stars svg');
+  stars.forEach((s, i) => {
+    s.setAttribute('fill', i < n ? 'var(--green)' : 'none');
+    s.setAttribute('stroke', i < n ? 'var(--green)' : 'var(--border)');
+  });
+  const lbl = document.getElementById('review-star-label');
+  if (lbl) lbl.textContent = STAR_LABELS[n] || '';
+}
+
+function submitReview() {
+  const stars = document.querySelectorAll('#review-stars svg[fill="var(--green)"]');
+  if (stars.length === 0) {
+    showToast('Моля, избери оценка');
+    return;
+  }
+  showToast('Отзивът е изпратен', true);
+  back();
+}
+
+function setVolStar(el, n) {
+  const row = el.closest('[data-vol]');
+  const stars = row.querySelectorAll('svg');
+  stars.forEach((s, i) => {
+    s.setAttribute('fill', i < n ? 'var(--green)' : 'none');
+    s.setAttribute('stroke', i < n ? 'var(--green)' : 'var(--border)');
+  });
+}
+
+function submitVolReviews() {
+  showToast('Оценките са запазени', true);
+  back();
+}
+
+function addTeamMember() {
+  const input = document.getElementById('team-invite-email');
+  const errEl = document.getElementById('team-invite-err');
+  const email = input.value.trim();
+
+  if (!email) {
+    errEl.textContent = 'Моля, въведи имейл адрес.';
+    errEl.classList.add('visible');
+    input.classList.add('input-error');
+    return;
+  }
+  if (!isValidEmail(email)) {
+    errEl.textContent = 'Невалиден имейл адрес.';
+    errEl.classList.add('visible');
+    input.classList.add('input-error');
+    return;
+  }
+
+  const list = document.getElementById('team-members-list');
+  const existing = Array.from(list.querySelectorAll('.team-member-email')).map(el => el.textContent);
+  if (existing.includes(email)) {
+    errEl.textContent = 'Този имейл вече е добавен.';
+    errEl.classList.add('visible');
+    input.classList.add('input-error');
+    return;
+  }
+
+  const initials = email.slice(0, 2).toUpperCase();
+  const row = document.createElement('div');
+  row.style.cssText = 'display:flex; align-items:center; gap:10px; padding:8px 12px; background:var(--bg); border-radius:var(--r-md); border:1px solid var(--border);';
+  row.innerHTML = `
+    <div class="avatar av-sm" style="background:#e0e0e0; color:#666; flex-shrink:0;">${initials}</div>
+    <span class="team-member-email" style="flex:1; font-size:14px; color:var(--text);">${email}</span>
+    <button onclick="this.closest('div').remove()" style="background:none; border:none; cursor:pointer; padding:4px; color:var(--text-muted);">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  `;
+  list.appendChild(row);
+
+  input.value = '';
+  input.classList.remove('input-error');
+  errEl.textContent = '';
+  errEl.classList.remove('visible');
+  input.focus();
+}
+
+function doCreateTeam() {
+  const name = document.getElementById('team-name').value.trim();
+  const nameErr = document.getElementById('team-name-err');
+  if (!name) {
+    nameErr.classList.add('visible');
+    document.getElementById('team-name').classList.add('input-error');
+    return;
+  }
+  nameErr.classList.remove('visible');
+  document.getElementById('team-name').classList.remove('input-error');
+  document.getElementById('team-members-list').innerHTML = '';
+  document.getElementById('team-invite-email').value = '';
+  document.getElementById('team-name').value = '';
+  document.getElementById('team-desc').value = '';
+  showToast('Екипът е създаден успешно', true);
+  back();
+}
+
+function openGroupChat(title, canWrite) {
+  const titleEl = document.getElementById('chat-event-title');
+  if (titleEl) titleEl.textContent = title;
+
+  const inputBar    = document.getElementById('chat-input-bar');
+  const readonlyBar = document.getElementById('chat-readonly-bar');
+  if (inputBar)    inputBar.style.display    = canWrite ? 'flex' : 'none';
+  if (readonlyBar) readonlyBar.style.display = canWrite ? 'none' : 'block';
+
+  go('screen-group-chat');
+  setTimeout(() => {
+    const msgs = document.getElementById('chat-messages');
+    if (msgs) msgs.scrollTop = msgs.scrollHeight;
+  }, 50);
+}
+
+function sendChatMessage() {
+  const input = document.getElementById('chat-input');
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  const now = new Date();
+  const time = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+
+  const row = document.createElement('div');
+  row.style.cssText = 'display:flex; flex-direction:row-reverse; gap:8px; align-items:flex-end;';
+  row.innerHTML = `
+    <div class="avatar av-sm" style="background:var(--green); color:white; flex-shrink:0; font-size:11px;">БЗ</div>
+    <div style="display:flex; flex-direction:column; align-items:flex-end;">
+      <div style="font-size:11px; color:var(--text-muted); margin-bottom:4px;">Организатор · ${time}</div>
+      <div style="background:var(--green); color:white; border-radius:16px 16px 4px 16px; padding:10px 14px; font-size:14px; max-width:230px; line-height:1.5;">${msg}</div>
+    </div>
+  `;
+
+  const msgs = document.getElementById('chat-messages');
+  msgs.appendChild(row);
+  msgs.scrollTop = msgs.scrollHeight;
+  input.value = '';
+  input.focus();
+}
+
+function joinWaitlist() {
+  showToast('Добавен/а си в списъка на чакащи', true);
+  back();
 }
 
 function openVolunteerSelection(title) {
