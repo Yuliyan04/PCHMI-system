@@ -10,7 +10,8 @@
       "PowerShell(if \\($?\\) { \"Downloaded OK\" } else { \"Failed\" })",
       "PowerShell(Invoke-WebRequest -Uri \"https://picsum.photos/seed/volunteer/600/400\" -OutFile \"c:\\\\Users\\\\Yulian\\\\Desktop\\\\pchmi\\\\pchmi_project\\\\images\\\\report-event3.jpg\" -UseBasicParsing)",
       "Bash(curl -L \"https://picsum.photos/seed/volunteer/600/400\" -o \"c:/Users/Yulian/Desktop/pchmi/pchmi_project/images/report-event3.jpg\" --max-time 20)",
-      "Bash(curl -L \"https://picsum.photos/seed/trees/600/400\" -o \"c:/Users/Yulian/Desktop/pchmi/pchmi_project/images/report-event4.jpg\" --max-time 20)"
+      "Bash(curl -L \"https://picsum.photos/seed/trees/600/400\" -o \"c:/Users/Yulian/Desktop/pchmi/pchmi_project/images/report-event4.jpg\" --max-time 20)",
+      "Bash(node screenshot.js)"
     ]
   }
 }
