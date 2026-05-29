@@ -123,14 +123,7 @@
       Регистрирай се като представител на организация
     </button>
 
-    <label style="display:flex; align-items:flex-start; gap:12px; margin-bottom:24px; cursor:pointer;">
-      <button type="button" id="terms-toggle" onclick="toggleTerms(this)" style="width:24px; height:24px; border-radius:50%; background:var(--border); border:none; flex-shrink:0; margin-top:2px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.2s;"></button>
-      <p style="font-size:13px; color:var(--text-mid); line-height:1.5;">
-        Съгласявам се с <strong>Общите условия</strong> и <strong>Политиката за поверителност</strong> за ползване на VolunteerChain
-      </p>
-    </label>
-
-    <div id="org-section" style="display:none; background:var(--bg); border-radius:var(--r-md); border:1.5px solid var(--border); padding:16px; margin-bottom:24px;">
+    <div id="org-section" style="display:none; background:var(--bg); border-radius:var(--r-md); border:1.5px solid var(--border); padding:16px; margin-bottom:16px;">
       <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px; line-height:1.5;">Въведи данните на организацията. Заявката ще бъде прегледана и одобрена от администратор.</p>
       <div class="form-group">
         <label class="form-label">ЕИК / Булстат *</label>
@@ -149,6 +142,13 @@
         <input type="email" id="org-work-email" class="form-input" placeholder="служебен@организация.bg" />
       </div>
     </div>
+
+    <label style="display:flex; align-items:flex-start; gap:12px; margin-bottom:24px; cursor:pointer;">
+      <button type="button" id="terms-toggle" onclick="toggleTerms(this)" style="width:24px; height:24px; border-radius:50%; background:var(--border); border:none; flex-shrink:0; margin-top:2px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.2s;"></button>
+      <p style="font-size:13px; color:var(--text-mid); line-height:1.5;">
+        Съгласявам се с <strong>Общите условия</strong> и <strong>Политиката за поверителност</strong> за ползване на VolunteerChain
+      </p>
+    </label>
 
     <button class="btn btn-green btn-full btn-pill" style="font-size:16px; padding:16px;" onclick="doRegister()">Създай профил</button>
 
